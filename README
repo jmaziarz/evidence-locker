@@ -1,0 +1,167 @@
+== Requirements
+
+* CentOS 5.2 (recommended)
+* Ruby Enterprise Edition (http://rubyforge.org/frs/download.php/41040/ruby-enterprise-1.8.6-20080810.tar.gz)
+* Ruby on Rails 2.1 higher
+* Sphinx 0.9.8 or higher (http://sphinxsearch.com/downloads/sphinx-0.9.8.tar.gz)
+* HTTrack (http://download.httrack.com/cserv.php3?File=httrack.tar.gz)
+
+== Requirements installation
+
+1. Install CentOS 5.2
+
+A detailed overview of the install is beyond the scope of this document but a
+base install plus the development packages should be sufficient for getting 
+started. This document was written using CentOS 5.2 64-bit.
+
+Note: Be sure to set the operating system time zone to UTC or the backround job
+processing will not work properly.
+
+Note: Be sure to setuid the mount.cifs and umount.cifs commands or the
+background job processin will not work properly.
+
+	# chmod +s /sbin/mount.cifs
+	# chmod +s /sbin/umount.cifs
+
+2. Install Ruby Enterprise Edition
+
+Ruby Enterprise Edition requires MySQL, PostgreSQL and SQLite development
+libraries, so be sure to install them first.
+
+	# yum install mysql-devel
+	# yum install postgresql-devel
+	# yum install sqlite-devel
+	
+For some operating systems it also requires "standard" Ruby be installed as
+a limited number of light-weight interpreters are included.
+
+	# yum install ruby
+
+After unpacking the Ruby Enterprise Edition package, run the installer. Be
+sure to read all of the instructions and follow the prompts. In most cases,
+the defaults are fine to use.
+
+RubyGems and Ruby on Rails will be installed automatically along with several
+dependancy gems (mysql, etc.).
+
+	# ./ruby-enterprise-1.8.6-20080810/installer
+	
+Now that Ruby Enterprise Edition is installed we don't need "standard" Ruby.
+Remove the "standard" Ruby so it doesn't cause any conflicts.
+
+	# yum uninstall ruby
+	
+Make some symlinks for convenience.
+
+	# ln -s /opt/ruby-enterprise-1.8.6-20080810/bin/erb /usr/bin/erb
+	# ln -s /opt/ruby-enterprise-1.8.6-20080810/bin/gem /usr/bin/gem
+	# ln -s /opt/ruby-enterprise-1.8.6-20080810/bin/irb /usr/bin/irb
+	# ln -s /opt/ruby-enterprise-1.8.6-20080810/bin/rackup /usr/bin/rackup
+	# ln -s /opt/ruby-enterprise-1.8.6-20080810/bin/rails /usr/bin/rails
+	# ln -s /opt/ruby-enterprise-1.8.6-20080810/bin/rake /usr/bin/rake
+	# ln -s /opt/ruby-enterprise-1.8.6-20080810/bin/rdoc /usr/bin/rdoc
+	# ln -s /opt/ruby-enterprise-1.8.6-20080810/bin/ri /usr/bin/ri
+	# ln -s /opt/ruby-enterprise-1.8.6-20080810/bin/ruby /usr/bin/ruby
+	# ln -s /opt/ruby-enterprise-1.8.6-20080810/bin/testrb /usr/bin/testrb
+
+3. Install Apache and Passenger (mod_rails) gem
+
+	# yum install httpd
+	# yum install httpd-devel
+	# gem install passenger
+	
+	# ln -s /opt/ruby-enterprise-1.8.6-20080810/bin/passenger-config /usr/bin/passenger-config
+	# ln -s /opt/ruby-enterprise-1.8.6-20080810/bin/passenger-install-apache2-module /usr/bin/passenger-install-apache2-module
+	# ln -s /opt/ruby-enterprise-1.8.6-20080810/bin/passenger-make-enterprisey /usr/bin/passenger-make-enterprisey
+	# ln -s /opt/ruby-enterprise-1.8.6-20080810/bin/passenger-m /usr/bin/passenger-memory-stats
+	# ln -s /opt/ruby-enterprise-1.8.6-20080810/bin/passenger-memory-stats /usr/bin/passenger-memory-stats
+	# ln -s /opt/ruby-enterprise-1.8.6-20080810/bin/passenger-spawn-server /usr/bin/passenger-spawn-server
+	# ln -s /opt/ruby-enterprise-1.8.6-20080810/bin/passenger-stress-test /usr/bin/passenger-stress-test
+	
+	# passenger-install-apache2-module
+
+	Create a file at /etc/httpd/conf.d/passenger.conf with the following lines:
+
+		LoadModule passenger_module /opt/ruby-enterprise-1.8.6-20080810/lib/ruby/gems/1.8/gems/passenger-2.0.3/ext/apache2/mod_passenger.so
+		  PassengerRoot /opt/ruby-enterprise-1.8.6-20080810/lib/ruby/gems/1.8/gems/passenger-2.0.3
+		  PassengerRuby /opt/ruby-enterprise-1.8.6-20080810/bin/ruby
+
+		NameVirtualHost *:80
+
+		<VirtualHost *:80>
+		  ServerName elocker.microsoft.com
+		  DocumentRoot "/var/www/rails/elocker/public"
+		  RailsEnv development
+		  RailsAllowModRewrite off
+		  <directory "/var/www/rails/elocker/public">
+		    Order allow,deny
+		    Allow from all
+		  </directory>
+		</VirtualHost>
+
+ 	** Be sure to modify any configuration directives to fit your installation. **
+
+4. Install MySQL
+
+	# yum install mysql
+	# yum install mysql-server
+	
+	# /etc/init.d/mysqld start
+	# mysqladmin -u root password 'new-password'
+	# mysqladmin -u root -p create elocker_production
+	
+5. Install other required gems
+
+	# gem install ruby-debug
+	
+6. Install Sphinx (full-text search engine)
+
+	# ./configure --prefix=/opt/local
+	# make
+	# make install
+	
+7. Install HTTrack
+
+	# ./configure --prefix=/opt/local
+	# make
+	# make install
+	
+8. Install Evidence Locker and configure
+
+	# mkdir /var/www/rails
+	# chmod -R 777 /var/www/rails
+	# cd /var/www/rails
+	# tar xvfz elocker-xxx.tar.gz
+	# cd elocker
+
+If you are migrating from an older version of Evidence Locker, be sure to run
+the migration task. This migration may take a long time depending on the
+number of items in the database.
+	
+	# rake elocker:migrate_to_2_dot_0
+	
+Migrate the database to add any additional changes to the database.
+	
+	# rake db:migrate
+	
+Generate a new index for full-text searching.
+
+	# rake ts:config
+	# rake ts:index
+	# rake ts:start
+	
+== Application notes
+
+By default, an administrative user is created which can be used to create
+other users. This user has the following credentials:
+
+   Username: admin
+   Password: admin1
+
+Questions and comments can be directed to the following people:
+
+   Jon Baker (Project Manager)
+   bakerj@mitre.org
+
+   Jeremy Maziarz (Lead Developer)
+   jmaziarz@mitre.org
