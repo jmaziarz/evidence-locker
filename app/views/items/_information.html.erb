@@ -1,0 +1,5 @@
+<div id="item-information">
+	<p>Created <%=h @item.created_at.strftime("%B %d, %Y") %> by <%= @item.creator.name %></p>
+	<p>Updated <%=h @item.updated_at.strftime("%B %d, %Y") %> by <%= @item.updater.nil? ? "Unknown" : @item.updater.name %></p>
+	<p>Originated <%= origin_date(@item) %> from <%= origin(@item) %></p>
+</div>

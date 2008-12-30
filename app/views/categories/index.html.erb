@@ -1,0 +1,39 @@
+<div id="actions">
+	<%= link_to 'New category', new_category_path, :class => 'action' %>
+	<span>Showing <%=h @categories.size %> categories</span>
+</div>
+
+<table class="show" id="categories" style="width: 100%">
+	<thead>
+		<tr>
+			<th style="width: 25%">Name</th>
+			<th style="width: 40%">Description</th>
+			<th style="width: 15%">Usage</th>
+			<th style="width: 20%"></th>
+		</tr>
+   </thead>
+
+	<tbody>
+	<% unless @categories.empty? -%>
+		<% for root in Category.roots -%>
+			<% root.self_and_descendants.each do |r| -%>
+				<tr>
+					<td><span style="font-weight: bold; margin-left: <%= r.level * 18 %>px;"><%=h r.name %></span></td>
+					<td><%=h truncate(r.description, 50) %></td>
+					<td><%= used_by(r) %></td>
+					<td>
+						<%= link_to 'edit', edit_category_path(r), :class => 'button-grey' %>
+						<% if r.children.size.zero? && r.items.count.zero? -%>
+							<%= link_to 'delete', category_path(r), :class => 'button-grey', :confirm => "Are you sure you want to delete '#{r.name}'?", :method => :delete %>
+						<% end -%>
+					</td>
+				</tr>
+			<% end -%>
+		<% end -%>
+	<% else -%>
+		<tr>
+			<td colspan="4">No categories.</td>
+		</tr>
+	<% end -%>
+	</tbody>
+</table>

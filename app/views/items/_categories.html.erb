@@ -1,0 +1,11 @@
+<div id="categories">
+	<% if @item.categories.empty? -%>
+		<div class="category">
+			<p>This item does not have any categories.</p>
+		</div>
+	<% else -%>
+		<% @item.categories.each do |category| -%>	
+			<p><%= nested_set_full_outline(category) %></p>
+		<% end -%>	
+	<% end -%>
+</div>

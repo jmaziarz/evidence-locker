@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Items: <%= controller.action_name %></title>
+
+  <%= stylesheet_link_tag 'header' %>
+  <%= stylesheet_link_tag 'navigation' %>
+  <%= stylesheet_link_tag 'evidence' %>
+  <%= stylesheet_link_tag 'jquery.ui.all' %>
+
+  <%= javascript_include_tag :defaults, 'sortable', 'jquery-1.2.6', 'ui/ui.datepicker.js' %>
+</head>
+<body id="<%= controller.controller_name %>">
+	
+<div id="wrapper">
+
+	<% if controller.controller_name != 'sessions' -%>
+		<%= render :partial => 'layouts/header' %>
+		<%= render :partial => 'layouts/navigation' %>
+		<%= render :partial => 'layouts/search' %>
+		
+		<%= flash_message %>
+	<% end -%>
+
+	<div id="content">
+		<%= yield %>
+	</div>
+
+</div>
+
+</body>
+</html>

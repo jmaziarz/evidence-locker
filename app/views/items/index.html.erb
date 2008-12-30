@@ -1,0 +1,42 @@
+<div id="actions">
+	<%= link_to 'New item', new_item_path, :class => 'action' %>
+	<span>Showing <%=h @items.size %> items</span>
+</div>
+
+<table class="sortable, show" id="sorted_items" style="width: 100%">
+	<thead>
+		<tr>
+	   	<th style="width: 18%">Title</th>
+	    	<th style="width: 12%">Identifier</th>
+			<th style="width: 8%">Type</th>
+	    	<th style="width: 14%">Updated</th>
+			<th style="width: 10%">Size</th>
+			<th style="width: 14%">Creator</th>
+			<th style="width: 24%">Categories</th>			
+		</tr>
+	</thead>
+
+	<tbody>
+	<% unless @items.empty? -%>
+		<% for item in @items %>
+			<tr>
+		   	<td><%= item.class.to_s == "Local" ? link_to(item.title, item.local.url) : item.title %></td>
+		    	<td><%= link_to item.identifier, item_path(item) %></td>
+				<td><%=h item.content_type %></td>
+				<td><%=h item.updated_at.strftime("%Y-%m-%d %H:%S") %></td>
+				<td><%=h number_to_human_size(item.file_size, 2) %></td>
+				<td><%=h item.creator.name %></td>
+				<td>
+					<% for category in item.categories %>
+						<span class="category"><%= category.name %></span>
+					<% end %>
+				</td>
+			</tr>
+		<% end %>
+	<% else -%>
+		<tr>
+			<td colspan="7">No items.</td>
+		</tr>
+	<% end -%>
+	</tbody>
+</table>

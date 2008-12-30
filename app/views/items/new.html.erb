@@ -1,0 +1,136 @@
+<div id="information">
+	<h1>Creating new item</h1>
+
+	<% form_for(@item, :html => { :multipart => true, :onsubmit => "description_validator()" }) do |f| %>
+	<div id="actions">
+		<%= f.submit "Create" %> or <%= link_to 'Cancel', item_path(@item), :class => 'action' %>
+	</div>
+</div>
+
+<div id="content-with-sidebar" style="min-height: 0">
+	<%= f.error_messages %>
+	<div class="evidence_chooser">
+		<input type="radio" name="source" value="local" onclick="$('local').show(); $('remote').hide();" <%= 'checked' if stringification(@item) == 'local' %> />Local
+		<input type="radio" name="source" value="remote" style="margin-left: 30px;" onclick="$('remote').show(); $('local').hide();" <%= 'checked' if stringification(@item) == 'remote' %> />Remote
+
+		<div id="local" style="<%= 'display:none;' unless stringification(@item) == 'local' %>">
+			<%= f.label :local, 'Choose a file to upload' %>
+			<%= f.file_field :local %><br />
+			<div style="margin-left: 30px;">
+				<%= f.check_box :local_unpack, { :disabled => true } %>Unpack archive
+			</div>
+		</div>
+
+		<div id="remote" style="<%= 'display:none;' unless stringification(@item) == 'remote' %>">
+			<%= f.label :remote_path, 'URL or full pathname of file/directory' %>
+			<%= f.text_field :remote_path, :style => 'width: 99%' %><br />
+			<div style="margin-left: 30px;">
+				 <input type="checkbox" name="remote_unpack" id="remote_unpack" onclick="$('remote_copy').checked = true" disabled />Unpack archive (disabled)
+				<input type="checkbox" name="remote_copy" id="remote_copy" style="margin-left: 30px;" disabled />Copy to server storage (disabled)
+				<%= f.check_box :remote_authenticate, :style => 'margin-left: 30px;', :onclick => "$('auth').toggle();" %>Use authentication<br />
+				<div id="auth" style="display:none;">
+					Username: <%= f.text_field :remote_username %>
+					Password: <%= f.password_field :remote_password %>
+				</div>
+			</div>
+		</div>
+	</div> 
+	
+	<p>
+     <%= f.label :description %>
+	  <%= f.text_area :description, :style => "width: 98%" %>
+	</p>
+</div>
+		
+<div id="sidebar">
+	<p>
+		<%= f.label :title %>
+		<%= f.text_field :title, :style => 'width: 100%' %>
+	</p>
+	
+	<p>
+		<%= f.label :origin %>
+		<%= f.text_field :origin, :style => 'width: 100%' %>
+	</p>
+	
+	<p>
+		<%= f.label :originated_at, "Date of origin" %>
+		<%= f.text_field :originated_at %>
+	</p>
+	
+	<p>
+		<%= f.label :category_ids, "Categorization <em>(Ctrl+click to select multiple)</em>" %>
+		<%= f.select :category_ids, nested_set_options(Category, @category) { |i| "#{'–' * i.level} #{i.name}" }, { }, { :multiple => true } %>
+	</p>
+</div>
+
+<% end %>
+
+<script language="javascript">
+	// Observe remote-pathname text input element for archive file extensions (zip|gz)
+	new Form.Element.Observer('<%= "#{stringification(@item)}_local" %>', 0.2, watchForLocalArchiveFile);
+	//new Form.Element.Observer('<%= "#{stringification(@item)}_remote_path" %>', 0.2, watchForRemoteArchiveFile);
+	
+	jQuery(document).ready(function() {
+	  jQuery('#<%= "#{stringification(@item)}_originated_at" %>').datepicker({  
+	      dateFormat: 'yy-mm-dd',
+	      yearRange: '-40:+1',
+	      buttonImage: '/images/calendar.png',  
+	      buttonImageOnly: true,  
+	      showOn: 'button'
+	  });
+	});
+
+	function description_validator() {
+		// Check the value of the element named text_name
+		// from the form named text_form
+		if (<%= "#{stringification(@item)}_description" %>.value == "") {
+			// If null display and alert box
+			var answer = confirm ("Are you sure you want to leave the description blank?");
+
+			if (answer)
+				return(true);
+			else
+				<%= "#{stringification(@item)}_description" %>.focus();
+				return (false);
+		}
+		// If text_name is not null continue processing
+		return (true);
+	}
+	
+	function watchForLocalArchiveFile() {
+		data = $F('<%= "#{stringification(@item)}_local" %>');
+	       data = data.replace(/^\s|\s$/g, ""); //trims string
+
+	       if (data.match(/([^\/\\]+)\.(zip|gz)$/i) )
+			 Field.enable('<%= "#{stringification(@item)}_local_unpack" %>');
+	       else
+			 Field.disable('<%= "#{stringification(@item)}_local_unpack" %>');
+			 $('<%= "#{stringification(@item)}_local_unpack" %>').checked = false;			
+	}
+
+	function watchForRemoteArchiveFile() {
+		data = $F('item_remote_path');
+	       data = data.replace(/^\s|\s$/g, ""); //trims string
+
+	       if (data.match(/([^\/\\]+)\.(zip|gz)$/i) )
+			 Field.enable('remote_unpack');
+	       else
+			 Field.disable('remote_unpack');
+			 $("remote_unpack").checked = false;	
+
+		Field.focus('item_remote_path');		
+	}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+

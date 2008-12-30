@@ -1,0 +1,39 @@
+<div id="actions">
+	&nbsp;
+	<span>Showing <%=h @references.size %> references</span>
+</div>
+
+<table class="sortable, show" id="sorted_references" style="width: 100%">
+	<thead>
+		<tr>
+			<th style="width: 16%">Name</th>
+			<th style="width: 19%">Description</th>
+			<th style="width: 19%">Bookmark</th>
+			<th style="width: 14%">Creator</th>
+			<th style="width: 12%">Identifier</th>
+			<th style="width: 20%" class="unsortable"></th>
+		</tr>
+   </thead>
+
+	<tbody>
+	<% unless @references.empty? -%>
+		<% for reference in @references -%>
+			<tr>
+				<td><%= reference.name %></td>
+				<td><%= truncate(reference.description, 50) %></td>
+				<td><%= reference.bookmark %></td>
+				<td><%= reference.creator.name %></td>
+				<td><%= link_to reference.item.identifier, item_path(reference.item) %></td>
+				<td>
+					<%= link_to 'edit', edit_reference_path(reference), :class => 'button-grey' %>
+					<%= link_to 'delete', reference_path(reference), :class => 'button-grey', :confirm => "Are you sure you want to delete '#{reference.name}'?", :method => :delete %>
+				</td>
+			</tr>
+		<% end -%>
+	<% else -%>
+		<tr>
+			<td colspan="6">No references.</td>
+		</tr>
+	<% end -%>
+	</tbody>
+</table>

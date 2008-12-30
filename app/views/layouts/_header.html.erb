@@ -1,0 +1,12 @@
+<div id="header">
+	<h3>
+		<%= current_user.name.empty? ? current_user.login : current_user.name %> | 
+		<% if current_user.admin? %>
+			<%= link_to 'Manage users', users_path %>
+		<% else %>
+			<%= link_to 'Settings', edit_user_path(current_user) %>
+		<% end -%> |
+		<%= link_to 'Log-out', logout_path %>
+	</h3>
+	<h1><%= link_to 'Evidence<span>Locker</span>', root_path %></h1>
+</div>

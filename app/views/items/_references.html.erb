@@ -1,0 +1,16 @@
+<div id="references">
+	<% if @item.references.empty? -%>
+		<div class="reference">
+			<p>This item does not have any references.</p>
+		</div>
+	<% else -%>
+		<% @item.references.each do |reference| -%>
+			<div id="reference-<%= reference.id %>" class="reference">
+				<p><%= link_to reference.bookmark, reference_path(reference) %></p>
+				<p><em><%= reference.name %></em></p>
+				<p>Created by <%=h reference.creator.name %>
+				on <%=h reference.created_at.strftime("%B %d, %Y") %></p>
+			</div>
+		<% end -%>
+  <% end -%>
+</div>

@@ -1,0 +1,49 @@
+div#navigation {
+	height: 28px;
+	background-color: #dadada;
+	background-repeat: repeat-x;
+	background-image: url(/images/bg_header_nav.gif);
+	border-bottom: 1px solid #a0a0a0;
+}
+
+div#navigation ul {
+	display: block;
+	position: relative;
+	margin: 0 0 0 20px;
+	list-style: none;
+}
+
+div#navigation ul li {
+	display: inline;
+}
+
+div#navigation ul li a:link, div#navigation ul li a:visited {
+	font-size: 1.05em;
+	line-height: 30px;
+	text-decoration: none;
+	text-transform: capitalize;
+	display: inline;
+	font-weight: bold;
+	padding: 5px 0 6px 0;
+	margin: 0 15px 0 0;
+	color: #444;
+}
+
+div#navigation ul li a:hover {
+	text-decoration: none;
+	color: #999;
+}
+
+#items #nav-items a,
+#categories #nav-categories a,
+#references #nav-references a,
+#users #nav-users a {
+	background: url(/images/tab_bg.gif) no-repeat center bottom;
+}
+
+#items #nav-items a.no-arrow,
+#categories #nav-categories a.no-arrow,
+#references #nav-references a.no-arrow,
+#users #nav-users a.no-arrow {
+	background: none;
+}

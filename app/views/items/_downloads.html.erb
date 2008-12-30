@@ -1,0 +1,15 @@
+<% if @item.class.to_s == 'Local' -%>
+	<%= link_to('Download', @item.local.url) %> <%= "(#{@item.local_file_name} - #{number_to_human_size(@item.local_file_size, 2)})" %>
+<% else -%>
+	<% if @item.child? -%>
+		<%= File.join(@item.root.remote_path, @item.relative_path) %>
+		<% unless @item.file_hash.nil? %>
+			<%= "(#{number_to_human_size(@item.file_size, 2)})" %>
+		<% end -%>
+	<% else -%>
+		<%= "#{@item.remote_path}" %>
+		<% if @item.url? -%>
+		(<%= link_to 'local mirror', "/data/#{@item.identifier}/mirror/index.html" %>)
+		<% end -%>
+	<% end -%>
+<% end -%>

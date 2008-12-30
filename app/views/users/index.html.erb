@@ -1,0 +1,28 @@
+<div id="actions">
+  <%= link_to 'New user', new_user_path, :class => 'action' %>
+</div>
+
+<table class="sortable, show" id="sorted_users" style="width: 100%">
+	<thead>
+		<tr>
+			<th style="width: 25%">Name</th>
+			<th style="width: 25%">Login name</th>
+			<th style="width: 30%">Email address</th>
+			<th style="width: 20%" class="unsortable"></th>
+		</tr>
+   </thead>
+
+	<tbody>
+	<% for user in @users -%>
+		<tr>
+			<td><span style="font-weight: bold"><%=h user.name %></span></td>
+			<td><%=h user.login %></td>
+			<td><%=h user.email %></td>
+			<td>
+				<%= link_to 'edit', edit_user_path(user), :class => 'button-grey' %>
+				<%= link_to 'delete', user_path(user), :class => 'button-grey', :confirm => "Are you sure you want to delete '#{user.name}'?", :method => :delete unless user.login == 'admin' %>
+			</td>
+		</tr>
+	<% end -%>
+	</tbody>
+</table>

@@ -1,0 +1,25 @@
+<div id="transformations">
+	<% if @item.transformations.empty? -%>
+		<div class="transformation">
+			<p>This item does not have any transformations.</p>
+		</div>
+	<% else -%>
+		<%= render :partial => 'transformation', :object => @item.transformations.last %>
+		<p>
+			<%= link_to_function('Show history', nil, :id => 'history_link', :class => 'action') do |page|
+				page.visual_effect :toggle_slide, "transformations-history", :duration => 0.2
+			end %>
+		</p>
+		
+		<div id="transformations-history" style="display: none;">
+			<% @item.transformations.each do |transformation| -%>
+				<% next if transformation.id == @item.transformations.last.id -%>
+				<div id="transformation-#{transformation.id}" class="transformation-history">
+					<p><%= link_to transformation.interpolated_file_name, transformation.data.url %></p>
+					<p>Uploaded by <%=h transformation.creator.name %>
+					on <%=h transformation.created_at.strftime("%B %d, %Y") %></p>
+				</div>
+			<% end -%>
+		</div>
+  	<% end -%>
+</div>

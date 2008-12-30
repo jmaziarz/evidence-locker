@@ -1,0 +1,10 @@
+<div id="descendants">
+	<ul>
+		<% if @item.parent -%>
+			<li><%= icon('arrow_left') %> <%= link_to('Parent Directory', item_path(@item.parent)) %></li>	
+		<% end -%>
+		<% @item.children.each do |child| -%>
+			<li><%= child.file_hash.nil? ? icon('folder') : icon('document') %> <%= link_to File.basename(child.relative_path), item_path(child) %></li>
+		<% end -%>
+	</ul>
+</div>

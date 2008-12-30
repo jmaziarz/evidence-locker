@@ -1,0 +1,39 @@
+<div id="information">
+	<h1>Editing user <%= @user.login %></h1>
+
+	<% form_for(@user) do |f| %>
+	<div id="actions">
+		<%= f.submit "Update" %> or <%= link_to 'Cancel', users_path, :class => 'action' %>
+	</div>
+</div>
+
+<div id="content-with-sidebar">
+	<%= f.error_messages %>
+	
+	<p>
+	  <%= f.label :name %>
+	  <%= f.text_field :name %>
+	</p>
+	<p>
+	  <%= f.label :login, 'Login name' %>
+	  <%= f.text_field :login %>
+	</p>
+	<p>
+	  <%= f.label :email, 'Email address' %>
+	  <%= f.text_field :email %>
+	</p>
+	<p>
+	  <%= f.label :password %>
+	  <%= f.password_field :password %>
+	</p>
+	<p>
+	  <%= f.label :password_confirmation %>
+	  <%= f.password_field :password_confirmation %>
+	</p>
+	
+	<p>
+	  <%= f.submit "Update" %> or <%= link_to 'Cancel', users_path, :class => 'action' %>
+	</p>
+</div>
+
+<% end %>

@@ -1,0 +1,71 @@
+<div id="information">
+	<h1>Editing <%= "#{@item.title} (#{@item.identifier})" %></h1>
+
+	<% form_for(@item, :html => { :onsubmit => "description_validator()" }) do |f| %>
+	<div id="actions">
+		<%= f.submit "Update" %> or <%= link_to 'Cancel', item_path(@item), :class => 'action' %>
+	</div>
+</div>
+
+<div id="content-with-sidebar">
+	<%= f.error_messages %>
+	<p>
+     <%= f.label :description %>
+	  <%= f.text_area :description, :style => "width: 98%" %>
+	</p>
+</div>
+
+<div id="sidebar">
+	<p>
+		<%= f.label :title %>
+		<%= f.text_field :title, :style => 'width: 100%' %>
+	</p>
+	
+	<p>
+		<%= f.label :origin %>
+		<%= f.text_field :origin, :style => 'width: 100%' %>
+	</p>
+	
+	<p>
+		<%= f.label :originated_at, "Date of origin" %>
+		<%= f.text_field :originated_at %>
+	</p>
+	
+	<p>
+		<%= f.label :category_ids, "Categorization <em>(Ctrl+click to select multiple)</em>" %>
+		<%= f.select :category_ids, nested_set_options(Category, @category) { |i| "#{'–' * i.level} #{i.name}" }, { }, { :multiple => true } %>
+	</p>
+</div>
+
+<% end %>
+
+<script>
+  jQuery(document).ready(function(){
+    jQuery('#<%= "#{stringification(@item)}_originated_at" %>').datepicker({  
+        dateFormat: 'yy-mm-dd',
+        yearRange: '-40:+1',
+        buttonImage: '/images/calendar.png',  
+        buttonImageOnly: true,  
+        showOn: 'button'
+    });
+  });
+
+	function description_validator()
+	{
+		// Check the value of the element named text_name
+		// from the form named text_form
+		if (<%= "#{stringification(@item)}_description" %>.value == "")
+		{
+			// If null display and alert box
+			var answer = confirm ("Are you sure you want to leave the description blank?");
+
+			if (answer)
+				return(true);
+			else
+				<%= "#{stringification(@item)}_description" %>.focus();
+				return (false);
+		}
+		// If text_name is not null continue processing
+		return (true);
+	}
+</script>

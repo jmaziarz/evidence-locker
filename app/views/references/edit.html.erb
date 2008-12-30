@@ -1,0 +1,31 @@
+<div id="information">
+	<h1>Editing <em>reference</em> for item <%= "(#{@reference.item.identifier})" %></h1>
+
+	<% form_for(@reference) do |f| %>
+	<div id="actions">
+		<%= f.submit "Update" %> or <%= link_to 'Cancel', references_path, :class => 'action' %>
+	</div>
+</div>
+
+<div id="content-with-sidebar">
+	<%= f.error_messages %>
+	
+	<p>
+	  <%= f.label :name %>
+	  <%= f.text_field :name, :style => "width: 98%"  %>
+	</p>
+	<p>
+	  <%= f.label :bookmark %>
+	  <%= f.text_field :bookmark, :style => "width: 98%"  %>
+	</p>
+	<p>
+	  <%= f.label :description %>
+	  <%= f.text_area :description, :style => 'width: 98%' %>
+	</p>
+	
+	<p>
+	  <%= f.submit "Update" %> or <%= link_to 'Cancel', references_path, :class => 'action' %>
+	</p>
+</div>
+
+<% end %>

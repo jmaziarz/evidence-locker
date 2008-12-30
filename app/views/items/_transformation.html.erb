@@ -1,0 +1,12 @@
+<div id="transformation-<%= transformation.id %>" class="transformation">
+	<%= link_to(image_tag("pdf-large.gif"), transformation.data_file_name) %>
+	<p>
+		<%= link_to	'Download transformation', transformation.data.url %>
+		(version <%= @item.transformations.size %>)
+	</p>
+	<p>
+		Uploaded by <%= transformation.creator.nil? ? "Unknown" : transformation.creator.name %>
+		on <%=h transformation.created_at.strftime("%B %d, %Y") %>
+	</p>
+</div>
+

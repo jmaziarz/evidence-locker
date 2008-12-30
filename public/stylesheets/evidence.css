@@ -1,0 +1,302 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font: 0.70em "Lucida Grande", "Lucida Sans", Tahoma, Verdana, sans-serif;
+	background-color: #ccc;
+}
+
+form { 
+	background: #fff;
+}
+
+label { 
+	font-size: 13px;
+	font-weight: bold;
+	color: #333; 
+	padding: 0; 
+	margin: 0;
+	display: block;
+}
+
+label em {
+	font-size: 11px;
+	font-weight: normal;
+	color: #666;
+}
+
+select {
+	color: #333; 
+	margin: 3px 5px 15px 0; 
+	font-weight: normal;
+	border: 1px solid #999; 
+}
+
+select[multiple="multiple"] {
+	width: 100%; 
+	height: 200px; 
+	padding: 5px;
+}
+
+input, textarea { 
+	margin: 3px 5px 15px 0; 
+	padding: 5px; 
+}
+
+input[type="text"] {
+	color: #333;
+	font-weight: normal;
+	border: 1px solid #999;
+}
+
+input[type="file"],
+input[type="password"] {
+	border: 1px solid #999;
+}
+
+table.show {
+	border-collapse: collapse;
+	background-color: #fff;
+	border: 2px solid #999;
+}
+
+table.show thead {
+	background-color: #e4e4e4;
+	border-bottom: 1px solid #999;
+}
+
+table.show th {
+	color: #666;
+	padding: 3px 5px 3px 12px;
+	text-align: left;
+	text-transform: uppercase;
+}
+
+table.show th a {
+	color: #666;
+	text-decoration: none;
+}
+
+table.show td {
+	color: #444;
+	padding: 4px 12px 5px 12px;
+	border-bottom: 1px solid #999;
+}
+
+div#wrapper {
+	width: 100%;
+	min-width: 1024px;
+	width: expression(document.body.clientWidth < 1024? "1024px" : "auto");
+}
+
+div#content {
+	padding: 15px 20px 10px 20px;
+	background-color: #ccc;
+}
+
+div#content-with-sidebar {
+	float: left;
+	width: 60%;
+	min-height: 500px;
+	height: expression(document.body.clientHeight < 500? "500px" : "auto");
+	margin: 0;
+	padding: 12px;
+	background-color: #fff;
+	border: 2px solid #999;
+}
+
+div#content p,
+div#content-with-sidebar p {
+	margin-bottom: 1em;
+}
+
+div#sidebar {
+	float: left;
+	width: 31%;
+	margin: 0px 0px 0 20px;
+}
+
+div.evidence_chooser {
+	float: left;
+	width: 97%;
+	background: #fff;
+	padding: 0 12px 0 0;
+	margin: 0 12px 18px 0;
+}
+
+div#information {
+	margin: 0;
+}
+
+div#information h1 {
+	border-bottom: 1px solid #8e8e8e;
+	color: #555;
+	font-weight: bold;
+	font-size: 1.5em;
+	text-align: left;
+	margin: 0 0 4px 0;
+}
+
+div#information span#actions {
+	color: #999;
+}
+
+div#information span#actions a {
+	color: #f00;
+	font-weight: bold;
+}
+
+#actions {
+	background-color: #ccc;
+ 	font-size: 11px;
+  	text-align: left;
+  	padding: 0 0 18px 0;
+	color: #666;
+}
+
+#actions span {
+	color: #666;
+	position: relative;
+  	float: right;
+  	text-align: right;
+}
+
+#actions a {
+   	color: #666;
+   	font-weight: bold;
+}
+
+#actions .action, .action {
+	color: #f00;
+}
+
+span.category {
+	padding: 1px 5px 1px 5px;
+	background-color: #cccddd;
+	text-transform:	uppercase;
+	font-size: 9px;
+}
+
+a.button-grey {
+	width: 70px;
+	margin-top: 3px;
+	height: 14px;
+	text-align: center;
+	color: #fff;
+	font-size: 11px;
+	font-weight: normal;
+	text-decoration: none;
+	background: url(/images/button-gray.gif) 0px 0px;
+	margin-left: 10px;
+	float: right;
+}
+
+div#descendants ul {
+	font-size: 0.94em;
+	list-style: none;
+	padding: 4px;
+}
+
+div#descendants li {
+	padding: 3px 0 3px 0;
+}
+
+div#item-information,
+div#categories,
+div#references,
+div#transformations {
+	margin: 0 0 10px 0;
+	padding: 12px;
+	padding-bottom: 0;
+	background-color: #e4e4e4;
+	color: #555;
+	border: 2px solid #999;
+}
+
+div#transformations-history {
+	
+}
+
+div.transformation img,
+div.transformation-history img {
+	float: left;
+	margin: 0 10px 0 0;
+}
+
+div#search {
+	height: 40px;
+	border-bottom: 1px solid #a0a0a0;
+	background-color: #e4e4e4;
+}
+
+div#search form {
+	margin: 0;
+	padding: 0;
+	background: none;
+	border: none;
+	text-align: center;
+	width: 100%;
+}
+
+div#search input {
+	margin: 9px 0 0 0;
+	padding: 4px;
+	font-size: 0.96em;
+}
+
+div#flash {
+	padding: 10px 10px 10px 20px;
+	border-bottom: 1px solid #a0a0a0;
+	color: #333;
+}
+
+div.notice {
+	background-color: #ffff66;
+}
+
+div.error {
+	background-color: #ff3333;
+}
+
+body#sessions, 
+body#sessions div#wrapper,
+body#sessions div#content {
+	background: #555;	
+}
+
+body#sessions div.authentication-box {
+	border: 6px solid #a6da86;
+	width: 400px;
+	margin: auto;
+	background-color: #fff;
+}
+
+body#sessions form {
+	padding: 20px;
+	margin: 0;
+	width: auto;
+}
+
+body#sessions h1 {
+	text-align: left;
+	color: #fff;
+	font-weight: bold;
+	line-height: 25px;
+	font-size: 25px;
+	border: none;
+	width: 400px;
+	margin: auto;
+	margin-top: 100px;
+	margin-bottom: 10px;
+}
+
+body#sessions h1 span {
+	color: #a6da86;
+}
+
+body#sessions div#flash {
+	border-bottom: 3px solid #a6da86;
+}
+

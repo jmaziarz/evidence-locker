@@ -1,0 +1,26 @@
+<h1>Listing transformations</h1>
+
+<table>
+  <tr>
+    <th>Data file name</th>
+    <th>Data content type</th>
+    <th>Data file size</th>
+    <th>Item</th>
+  </tr>
+
+<% for transformation in @transformations %>
+  <tr>
+    <td><%=h transformation.data_file_name %></td>
+    <td><%=h transformation.data_content_type %></td>
+    <td><%=h transformation.data_file_size %></td>
+    <td><%=h transformation.item_id %></td>
+    <td><%= link_to 'Show', transformation %></td>
+    <td><%= link_to 'Edit', edit_transformation_path(transformation) %></td>
+    <td><%= link_to 'Destroy', transformation, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New transformation', new_transformation_path %>

@@ -1,0 +1,23 @@
+<p>
+  <b>Data file name:</b>
+  <%=h @transformation.data_file_name %>
+</p>
+
+<p>
+  <b>Data content type:</b>
+  <%=h @transformation.data_content_type %>
+</p>
+
+<p>
+  <b>Data file size:</b>
+  <%=h @transformation.data_file_size %>
+</p>
+
+<p>
+  <b>Item:</b>
+  <%=h @transformation.item_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_transformation_path(@transformation) %> |
+<%= link_to 'Back', transformations_path %>

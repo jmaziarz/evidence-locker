@@ -1,0 +1,28 @@
+<h1>Editing transformation</h1>
+
+<% form_for(@transformation) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :data_file_name %><br />
+    <%= f.text_field :data_file_name %>
+  </p>
+  <p>
+    <%= f.label :data_content_type %><br />
+    <%= f.text_field :data_content_type %>
+  </p>
+  <p>
+    <%= f.label :data_file_size %><br />
+    <%= f.text_field :data_file_size %>
+  </p>
+  <p>
+    <%= f.label :item_id %><br />
+    <%= f.text_field :item_id %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @transformation %> |
+<%= link_to 'Back', transformations_path %>

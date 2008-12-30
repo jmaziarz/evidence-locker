@@ -1,0 +1,30 @@
+<div id="information">
+	<h1>Creating new category</h1>
+	
+	<% form_for(@category) do |f| %>
+	<div id="actions">
+		<%= f.submit 'Create' %> or <%= link_to 'Cancel', categories_path, :class => 'action' %>
+	</div>
+</div>
+
+<div id="content-with-sidebar" style="min-height: 0">
+	<%= f.error_messages %>
+
+	<p>
+		<%= f.label :name %>
+		<%= f.text_field :name, :style => "width: 98%"  %>
+	</p>
+	<p>
+		<%= f.label :description %>
+		<%= f.text_area :description, :style => 'width: 98%' %>
+	</p>
+	<p>
+		<%= f.label 'Parent category' %>
+		<%= f.select :child_of, nested_set_options(Category, @category) { |i| "#{'–' * i.level} #{i.name}" }, { :prompt => 'The top-level' } %>
+	</p>
+
+	<p>
+		<%= f.submit 'Create' %> or <%= link_to 'Cancel', categories_path, :class => 'action' %>
+	</p>
+	<% end %>
+</div>

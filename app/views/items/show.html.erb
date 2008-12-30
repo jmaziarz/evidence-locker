@@ -1,0 +1,22 @@
+<div id="information">
+	<h1><%= "#{@item.title} (#{@item.identifier})" %></h1>
+
+	<div id="actions">
+		<%= link_to 'Edit this item', edit_item_path(@item), :class => 'action' %> |
+		<%= link_to 'New transformation', new_item_transformation_url(@item), :class => 'action' %> |
+		<%= link_to 'New reference', new_item_reference_url(@item), :class => 'action' %> &#8226;
+		<%= render :partial => 'downloads' %>
+	</div>
+</div>
+
+<div id="content-with-sidebar">
+	<%= simple_format(@item.description) %>
+</div>
+
+<div id="sidebar">
+	<%= render :partial => 'information' %>
+	<%= render :partial => 'categories' %>
+	<%= render :partial => 'transformations' %>
+	<%= render :partial => 'references' %>
+	<%= render :partial => 'descendants' unless @item.descendants.empty? %>
+</div>
